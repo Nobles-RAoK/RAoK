@@ -1,0 +1,69 @@
+<html>
+<head>
+<title>New Post Page</title>
+</head>
+<body>
+<?php
+ 
+include('getcardposts.php');
+ 
+$error = array();
+ 
+//Error Checking
+if(isset($_POST['submitted'])) {
+ 
+  // post Length
+  if( strlen($_POST['post']) < 1 || strlen($_POST['user_name']) > 140 ) {
+ 
+    $error['post'] = 'Your post must be under 140 characters.';
+  }
+ 
+  // If there are no errors...
+  if(count($error) === 0) {
+    $un = $_POST['post'];
+ 
+  // SQL query for returning posts from the database
+  $result = $mysqli->query("SELECT post FROM post WHERE post='$un'");
+ 
+  // Checking to see if any post were returned
+  if( $result->num_rows === 0 ) {
+ 
+  // insert the user login information into the database
+  $result = $mysqli->query("INSERT INTO post (Field) VALUES ('".$un."')");
+
+ 
+  if( $result === true ) {
+    header("Location:userpage.php");
+  }else{
+    $error['post'] = 'There was an error during registration, please try again.';
+  }
+}
+else{
+    $error['post'] = 'Post is already in use.';
+    }
+  }
+}
+?>
+    <h3>Your post has to be less than 140 characters.</h3>
+<form method="POST">
+ 
+  <label>Your Post: </label><input type="text" name="user_name" value="
+    <?php
+      if(isset($_POST['post'])) {
+        echo $_POST['post'];
+      }
+    ?>
+  " />  
+  <?php
+    if(isset($error['post'])) {
+      echo $error['post'];
+    }
+  ?><br />
+ 
+ 
+ 
+<input type="submit" name="submitted" value="Go!" />
+ 
+</form>
+</body>
+</html>
