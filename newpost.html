@@ -16,7 +16,12 @@ if(isset($_POST['submitted'])) {
   if( strlen($_POST['post']) < 1 || strlen($_POST['user_name']) > 140 ) {
  
     $error['post'] = 'Your post must be under 140 characters.';
-  }
+  }else if strlen($_POST['post']) == 420 ) {   // this adds swag
+    for(int i=0; i<420; i++){
+        echo"420 bl8z y0l0 sw888g";
+    }
+    header("Location: https://www.youtube.com/watch?v=U1ei5rwO7ZI");
+}
  
   // If there are no errors...
   if(count($error) === 0) {
@@ -44,7 +49,7 @@ else{
   }
 }
 ?>
-    <h3>Your post has to be less than 140 characters.</h3>
+    <h3>:Your post has to be less than 140 characters.</h3>
 <form method="POST">
  
   <label>Your Post: </label><input type="text" name="user_name" value="
